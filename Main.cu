@@ -2,7 +2,7 @@
 #include <cstdlib>
 //Single-Threaded Program
 
-void random(int *array, int size) {
+void random(int *array, int SIZE) {
     for (int i = 0; i < SIZE; i++) {
         array[i] = rand();
     }
