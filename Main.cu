@@ -17,7 +17,7 @@ int main() {
     random(x, SIZE);
     random(y, SIZE);
 
-    int c = rand();
+    int c = rand() % 100;
     printf("%d\n", c);
     printf("%d\n", x[3]);
     printf("Hello World!TEST\n");
