@@ -21,7 +21,7 @@ int main() {
     //Number between 1 and 100
     int c = rand() % 100;
 
-    for (int j = 0; i < 0xFFFFFFF; i++) {
+    for (int j = 0; j < 0xFFFFFFF; j++) {
         int ticks = clock();
 
         for (int i = 0; i < SIZE; i++) {
