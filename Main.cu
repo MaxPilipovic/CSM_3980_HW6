@@ -30,7 +30,7 @@ int main() {
         printf("%d\n", c);
         printf("%d\n", x[3]);
         printf("Hello World!TEST\n");
-        printf("");
+        printf("\n");
         printf("%f\n", (float)ticks / CLOCKS_PER_SEC);
     }
 
