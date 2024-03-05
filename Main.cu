@@ -19,7 +19,7 @@ int main() {
     random(y, SIZE);
 
     //Number between 1 and 100
-    int c = rand() % 100;
+    int c = rand() % 100 + 1;
 
     for (int j = 0; j < 0xFFFFFFF; j++) {
         int ticks = clock();
