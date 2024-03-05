@@ -11,9 +11,9 @@ void random(int *array, int SIZE) {
 
 int main() {
     int SIZE = 536870912;
-    int x[SIZE];
-    int y[SIZE];
-    int z[SIZE];
+    int *x = (int*)malloc(SIZE * sizeof(int));
+    int *y = (int*)malloc(SIZE * sizeof(int));
+    int *z = (int*)malloc(SIZE * sizeof(int));
 
     random(x, SIZE);
     random(y, SIZE);
