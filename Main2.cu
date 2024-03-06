@@ -2,36 +2,18 @@
 #include <stdlib.h>
 #include <time.h>
 //Adjacent Multi-Threaded CUDA
-int main() {
-    int SIZE = 536870912;
-    int *x = (int*)malloc(SIZE * sizeof(int));
-    int *y = (int*)malloc(SIZE * sizeof(int));
-    int *z = (int*)malloc(SIZE * sizeof(int));
-
-    random(x, SIZE);
-    random(y, SIZE);
-
-    //Number between 1 and 100
-    int c = rand() % 100 + 1;
-
-    //Send it
-    for (int j = 0; j < 0xFFFFFFF; j++) {
-        int ticks = clock();
-        vecadd(x, y, z, c, SIZE);
-        printf("%f\n", (float)ticks / CLOCKS_PER_SEC);
-        break;
-    }
-
-    free(x);
-    free(y);
-    free(z);
-
-    return 0;
-}
-
 void random(int *array, int SIZE) {
     for (int i = 0; i < SIZE; i++) {
         array[i] = rand();
+    }
+}
+
+__global__ void vecadd_kernel(int* x, int* y, int* z, int c, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+
+    for (int j = i; j < n; j += stride) {
+        z[j] = c * x[j] + y[j];
     }
 }
 
@@ -63,11 +45,29 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     cudaFree(z_d);
 }
 
-__global__ void vecadd_kernel(int* x, int* y, int* z, int c, int n) {
-    int i = blockIdx.x * blockDim.x + threadIdx.x;
-    int stride = blockDim.x * gridDim.x;
+int main() {
+    int SIZE = 536870912;
+    int *x = (int*)malloc(SIZE * sizeof(int));
+    int *y = (int*)malloc(SIZE * sizeof(int));
+    int *z = (int*)malloc(SIZE * sizeof(int));
 
-    for (int j = i; j < n; j += stride) {
-        z[j] = c * x[j] + y[j];
+    random(x, SIZE);
+    random(y, SIZE);
+
+    //Number between 1 and 100
+    int c = rand() % 100 + 1;
+
+    //Send it
+    for (int j = 0; j < 0xFFFFFFF; j++) {
+        int ticks = clock();
+        vecadd(x, y, z, c, SIZE);
+        printf("%f\n", (float)ticks / CLOCKS_PER_SEC);
+        break;
     }
+
+    free(x);
+    free(y);
+    free(z);
+
+    return 0;
 }
