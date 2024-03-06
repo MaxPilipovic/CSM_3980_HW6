@@ -17,7 +17,7 @@ int main() {
     //Send it
     for (int j = 0; j < 0xFFFFFFF; j++) {
         int ticks = clock();
-        vecadd(x, y, z, c, SIZE)
+        vecadd(x, y, z, c, SIZE);
         printf("%f\n", (float)ticks / CLOCKS_PER_SEC);
         break;
     }
@@ -49,7 +49,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     // Perform computation on GPU
     int threadsBlock = 256;
     int threadsGrid = (SIZE + threadsBlock - 1) / threadsBlock;
-    vecadd_kernal<<<threadsGrid, threadsBlock>>>(x_d, y_d, z_d, c, SIZE);
+    vecadd_kernel<<<threadsGrid, threadsBlock>>>(x_d, y_d, z_d, c, SIZE);
 
     //Synchronize
     cudaDeviceSynchronize();
