@@ -11,10 +11,15 @@ void random(int *array, int SIZE) {
 __global__ void vecadd_kernel(int* x, int* y, int* z, int c, int n) {
     int i = blockDim.x*blockIdx.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
-    int stridePerBlock = (n + stride - 1) / stride;
+    int block = (n + stride - 1) / stride;
 
-    int start = i * stridePerBlock;
-    int end = start + stridePerBlock;
+    int start = i * block;
+    int end = start + block;
+
+    //Bounds for array
+    if (end > n) {
+        end = n;
+    }
 
     //Works on different array elements seperated by stride
     for (int j = start; j < end; j++) {
