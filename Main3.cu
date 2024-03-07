@@ -14,7 +14,7 @@ __global__ void vecadd_kernel(int* x, int* y, int* z, int c, int n) {
     int stridePerBlock = (n + stride - 1) / stride;
 
     int start = i * stridePerBlock;
-    int end = start + sridePerBlock;
+    int end = start + stridePerBlock
 
     //Works on different array elements seperated by stride
     for (int j = start; j < end; j++) {
