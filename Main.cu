@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 //Single-Threaded Program
+void random(int *array, int SIZE) {
+    for (int i = 0; i < SIZE; i++) {
+        array[i] = rand();
+    }
+}
+
 int main() {
     //here
     srand(time(NULL));
@@ -37,11 +43,5 @@ int main() {
     free(z);
 
     return 0;
-}
-
-void random(int *array, int SIZE) {
-    for (int i = 0; i < SIZE; i++) {
-        array[i] = rand();
-    }
 }
 
