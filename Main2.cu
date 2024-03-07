@@ -9,9 +9,10 @@ void random(int *array, int SIZE) {
 }
 
 __global__ void vecadd_kernel(int* x, int* y, int* z, int c, int n) {
-    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    int i = blockDim.x*blockIdx.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
 
+    //Works on different array elements seperated by stride
     for (int j = i; j < n; j += stride) {
         z[j] = c * x[j] + y[j];
     }
@@ -29,9 +30,9 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     cudaMemcpy(y_d, y, SIZE*sizeof(int), cudaMemcpyHostToDevice);
 
     // Perform computation on GPU
-    int threadsBlock = 256;
-    int threadsGrid = (SIZE + threadsBlock - 1) / threadsBlock;
-    vecadd_kernel<<<threadsGrid, threadsBlock>>>(x_d, y_d, z_d, c, SIZE);
+    int numThreadsPerBlock = 512;
+    int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
+    vecadd_kernel<<<numBlocks, numThreadsPerBlock>>>(x_d, y_d, z_d, c, SIZE);
 
     //Synchronize
     cudaDeviceSynchronize();
