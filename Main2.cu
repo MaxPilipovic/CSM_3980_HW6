@@ -47,6 +47,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
 }
 
 int main() {
+    srand(time(NULL));
     int SIZE = 536870912;
     int *x = (int*)malloc(SIZE * sizeof(int));
     int *y = (int*)malloc(SIZE * sizeof(int));
@@ -59,12 +60,15 @@ int main() {
     int c = rand() % 100 + 1;
 
     //Send it
-    for (int j = 0; j < 0xFFFFFFF; j++) {
-        int ticks = clock();
-        vecadd(x, y, z, c, SIZE);
-        printf("%f\n", (float)ticks / CLOCKS_PER_SEC);
-        break;
-    }
+    clock_t start_t, end_t;
+    double total_t;
+    start_t = clock();
+
+    vecadd(x, y, z, c, SIZE);
+
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+    printf("%f\n", total_t);
 
     free(x);
     free(y);
