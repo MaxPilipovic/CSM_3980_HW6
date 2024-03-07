@@ -10,6 +10,7 @@ void random(int *array, int SIZE) {
 }
 
 int main() {
+    srand(0);
     int SIZE = 536870912;
     int *x = (int*)malloc(SIZE * sizeof(int));
     int *y = (int*)malloc(SIZE * sizeof(int));
