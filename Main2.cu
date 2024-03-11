@@ -48,7 +48,8 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
 
 int main() {
     srand(time(NULL));
-    int SIZE = 268435456;
+    //268435456
+    int SIZE = 322122547;
     int *x = (int*)malloc(SIZE * sizeof(int));
     int *y = (int*)malloc(SIZE * sizeof(int));
     int *z = (int*)malloc(SIZE * sizeof(int));
