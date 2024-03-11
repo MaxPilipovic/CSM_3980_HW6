@@ -11,7 +11,7 @@ void random(int *array, int SIZE) {
 int main() {
     //here
     srand(time(NULL));
-    int SIZE = 1073741824; //4GB
+    int SIZE = 134217728;
     int *x = (int*)malloc(SIZE * sizeof(int));
     int *y = (int*)malloc(SIZE * sizeof(int));
     int *z = (int*)malloc(SIZE * sizeof(int));
