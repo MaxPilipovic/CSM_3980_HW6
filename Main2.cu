@@ -29,10 +29,6 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     cudaMemcpy(x_d, x, SIZE*sizeof(int), cudaMemcpyHostToDevice);
     cudaMemcpy(y_d, y, SIZE*sizeof(int), cudaMemcpyHostToDevice);
 
-    clock_t start_t, end_t;
-    double total_t;
-    start_t = clock();
-
     // Perform computation on GPU
     int numThreadsPerBlock = 512;
     int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
