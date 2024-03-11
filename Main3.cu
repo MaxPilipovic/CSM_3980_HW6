@@ -79,15 +79,7 @@ int main() {
     int c = rand() % 100 + 1;
 
     //Send it
-    clock_t start_t, end_t;
-    double total_t;
-    start_t = clock();
-
     vecadd(x, y, z, c, SIZE);
-
-    end_t = clock();
-    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-    printf("%f\n", total_t);
 
     free(x);
     free(y);
