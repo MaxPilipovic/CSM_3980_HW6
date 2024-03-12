@@ -53,7 +53,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     cudaEventSynchronize(stop);
     cudaEventElapsedTime(&time, start, stop);
     cudaEventDestroy(start);
-    cudaEventDestory(stop);
+    cudaEventDestroy(stop);
 
     //Synchronize
     cudaDeviceSynchronize();
