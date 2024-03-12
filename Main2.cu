@@ -29,18 +29,23 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     cudaMemcpy(x_d, x, SIZE*sizeof(int), cudaMemcpyHostToDevice);
     cudaMemcpy(y_d, y, SIZE*sizeof(int), cudaMemcpyHostToDevice);
 
-    clock_t start_t, end_t;
-    double total_t;
-    start_t = clock();
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventRecord(start, 0);
+    float time;
 
     //Perform computation on GPU
     int numThreadsPerBlock = 512;
     int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
     vecadd_kernel<<<numBlocks, numThreadsPerBlock>>>(x_d, y_d, z_d, c, SIZE);
 
-    end_t = clock();
-    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-    printf("%f\n", total_t);
+    cudaEventCreate(&stop);
+    cudaEventRecord(stop, 0);
+    cudaEventSynchronize(stop);
+    cudaEventElapsedTime(&time, start, stop);
+    printf("%f\n", time);
+    cudaEventDestroy(start);
+    cudaEventDestroy(stop);
 
     //Synchronize
     cudaDeviceSynchronize();
@@ -57,7 +62,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
 int main() {
     srand(time(NULL));
     //268435456
-    int SIZE = 1073741824;
+    int SIZE = 134217728;
     int *x = (int*)malloc(SIZE * sizeof(int));
     int *y = (int*)malloc(SIZE * sizeof(int));
     int *z = (int*)malloc(SIZE * sizeof(int));
