@@ -12,7 +12,7 @@ int main() {
     //here
     srand(time(NULL));
     //268435456
-    int SIZE = 134217728;
+    int SIZE = 536870912;
     int *x = (int*)malloc(SIZE * sizeof(int));
     int *y = (int*)malloc(SIZE * sizeof(int));
     int *z = (int*)malloc(SIZE * sizeof(int));

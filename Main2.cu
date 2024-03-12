@@ -19,13 +19,13 @@ __global__ void vecadd_kernel(int* x, int* y, int* z, int c, int n) {
 }
 
 void vecadd(int* x, int* y, int* z, int c, int SIZE) {
-    // Allocate GPU memory
+    //Allocate GPU memory
     int *x_d, *y_d, *z_d;
 
     cudaMalloc((void**) &x_d, SIZE*sizeof(int));
     cudaMalloc((void**) &y_d, SIZE*sizeof(int));
     cudaMalloc((void**) &z_d, SIZE*sizeof(int));
-    // Copy data to GPU memory
+    //Copy data to GPU memory
     cudaMemcpy(x_d, x, SIZE*sizeof(int), cudaMemcpyHostToDevice);
     cudaMemcpy(y_d, y, SIZE*sizeof(int), cudaMemcpyHostToDevice);
 
@@ -33,7 +33,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     double total_t;
     start_t = clock();
 
-    // Perform computation on GPU
+    //Perform computation on GPU
     int numThreadsPerBlock = 512;
     int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
     vecadd_kernel<<<numBlocks, numThreadsPerBlock>>>(x_d, y_d, z_d, c, SIZE);
@@ -45,10 +45,10 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     //Synchronize
     cudaDeviceSynchronize();
 
-    // Copy data from GPU memory
+    //Copy data from GPU memory
     cudaMemcpy(z, z_d, SIZE *sizeof(int), cudaMemcpyDeviceToHost);
 
-    // Deallocate GPU memory
+    //Deallocate GPU memory
     cudaFree(x_d);
     cudaFree(y_d);
     cudaFree(z_d);
@@ -57,7 +57,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
 int main() {
     srand(time(NULL));
     //268435456
-    int SIZE = 268435456;
+    int SIZE = 536870912;
     int *x = (int*)malloc(SIZE * sizeof(int));
     int *y = (int*)malloc(SIZE * sizeof(int));
     int *z = (int*)malloc(SIZE * sizeof(int));
