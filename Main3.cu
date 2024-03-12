@@ -42,7 +42,23 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     //Perform computation on GPU
     int numThreadsPerBlock = 512;
     int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
+
+    //Start time
+    //cudaEvent_t start, stop;
+    //cudaEventCreate(&start);
+    //cudaEventRecord(start, 0);
+    //float time;
+
     vecadd_kernel<<<numBlocks, numThreadsPerBlock>>>(x_d, y_d, z_d, c, SIZE);
+
+    //End time
+    //cudaEventCreate(&stop);
+    //cudaEventRecord(stop, 0);
+    //cudaEventSynchronize(stop);
+    //cudaEventElapsedTime(&time, start, stop);
+    //printf("%f\n", time);
+    //cudaEventDestroy(start);
+    //cudaEventDestroy(stop);
 
     //Synchronize
     cudaDeviceSynchronize();
