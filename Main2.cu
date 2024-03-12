@@ -29,10 +29,18 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     cudaMemcpy(x_d, x, SIZE*sizeof(int), cudaMemcpyHostToDevice);
     cudaMemcpy(y_d, y, SIZE*sizeof(int), cudaMemcpyHostToDevice);
 
+    clock_t start_t, end_t;
+    double total_t;
+    start_t = clock();
+
     // Perform computation on GPU
     int numThreadsPerBlock = 512;
     int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
     vecadd_kernel<<<numBlocks, numThreadsPerBlock>>>(x_d, y_d, z_d, c, SIZE);
+
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+    printf("%f\n", total_t);
 
     //Synchronize
     cudaDeviceSynchronize();
@@ -60,17 +68,8 @@ int main() {
     //Number between 1 and 100
     int c = rand() % 100 + 1;
 
-    clock_t start_t, end_t;
-    double total_t;
-    start_t = clock();
-
     //Send it
     vecadd(x, y, z, c, SIZE);
-
-    end_t = clock();
-    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-    printf("%f\n", total_t);
-
 
     free(x);
     free(y);
