@@ -9,7 +9,7 @@ void random(int *array, int SIZE) {
 }
 
 __global__ void vecadd_kernel(int* x, int* y, int* z, int c, int n) {
-    int i = blockDim.x*blockIdx.x + threadIdx.x;
+    int i = blockDim.x * blockIdx.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
     int block = (n + stride - 1) / stride;
 
