@@ -42,6 +42,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     int numThreadsPerBlock = 512;
     int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
 
+    //Start time
     cudaEvent_t start, stop;
     cudaEventCreate(&start);
     cudaEventRecord(start, 0);
@@ -49,6 +50,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
 
     vecadd_kernel<<<numBlocks, numThreadsPerBlock>>>(x_d, y_d, z_d, c, SIZE);
 
+    //End time
     cudaEventCreate(&stop);
     cudaEventRecord(stop, 0);
     cudaEventSynchronize(stop);
@@ -72,7 +74,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
 int main() {
     srand(time(NULL));
     //268435456
-    int SIZE = 268435456;
+    int SIZE = 536870912;
     int *x = (int*)malloc(SIZE * sizeof(int));
     int *y = (int*)malloc(SIZE * sizeof(int));
     int *z = (int*)malloc(SIZE * sizeof(int));
