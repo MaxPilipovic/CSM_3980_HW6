@@ -52,7 +52,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     cudaEventRecord(stop, 0);
     cudaEventSynchronize(stop);
     cudaEventElapsedTime(&time, start, stop);
-    printf(time);
+    printf("%f\n", time);
     cudaEventDestroy(start);
     cudaEventDestroy(stop);
 
