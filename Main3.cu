@@ -40,7 +40,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     cudaMemcpy(y_d, y, SIZE*sizeof(int), cudaMemcpyHostToDevice);
 
     //Perform computation on GPU
-    int numThreadsPerBlock = 1024;
+    int numThreadsPerBlock = 512;
     int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
 
     //Start time
@@ -78,7 +78,7 @@ int main() {
     //268435456
 
     //1073741824
-    int SIZE = 134217728;
+    int SIZE = 2684354560;
     int *x = (int*)malloc(SIZE * sizeof(int));
     int *y = (int*)malloc(SIZE * sizeof(int));
     int *z = (int*)malloc(SIZE * sizeof(int));
