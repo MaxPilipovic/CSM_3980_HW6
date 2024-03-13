@@ -40,7 +40,7 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     cudaMemcpy(y_d, y, SIZE*sizeof(int), cudaMemcpyHostToDevice);
 
     //Perform computation on GPU
-    int numThreadsPerBlock = 512;
+    int numThreadsPerBlock = 256;
     int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
 
     //Start time
