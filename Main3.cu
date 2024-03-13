@@ -78,7 +78,7 @@ int main() {
     //268435456
 
     //1073741824
-    int SIZE = 2684354560;
+    int SIZE = 1610612736;
     int *x = (int*)malloc(SIZE * sizeof(int));
     int *y = (int*)malloc(SIZE * sizeof(int));
     int *z = (int*)malloc(SIZE * sizeof(int));
