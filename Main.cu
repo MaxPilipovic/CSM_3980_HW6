@@ -28,7 +28,7 @@ int main() {
         z[i] = x[i] * c + y[i];
     }
     time_t end = time(NULL);
-    printf("%d\n", difftime(end, start));
+    printf("%f\n", difftime(end, start));
 
     printf("%d\n", c);
     printf("%d\n", x[3]);
