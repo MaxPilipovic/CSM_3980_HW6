@@ -21,6 +21,7 @@ int main() {
     random(y, SIZE);
 
     //Number between 1 and 100
+    int c = rand() % 100 + 1;
     time_t start = time(NULL);
 
     start_t = clock();
