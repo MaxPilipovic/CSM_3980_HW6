@@ -34,22 +34,10 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     int numThreadsPerBlock = 512;
     int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
 
-    //Start time
-    //cudaEvent_t start, stop;
-    //cudaEventCreate(&start);
-    //cudaEventRecord(start, 0);
-    //float time;
-
+    time_t start = time(NULL);
     vecadd_kernel<<<numBlocks, numThreadsPerBlock>>>(x_d, y_d, z_d, c, SIZE);
-
-    //End time
-    //cudaEventCreate(&stop);
-    //cudaEventRecord(stop, 0);
-    //cudaEventSynchronize(stop);
-    //cudaEventElapsedTime(&time, start, stop);
-    //printf("%f\n", time);
-    //cudaEventDestroy(start);
-    //cudaEventDestroy(stop);
+    time_t end = time(NULL);
+    printf("%f\n", difftime(end, start));
 
     //Synchronize
     cudaDeviceSynchronize();
