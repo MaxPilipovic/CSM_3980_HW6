@@ -21,17 +21,14 @@ int main() {
     random(y, SIZE);
 
     //Number between 1 and 100
-    int c = rand() % 100 + 1;
-    clock_t start_t, end_t;
-    double total_t;
+    time_t start = time(NULL);
 
     start_t = clock();
     for (int i = 0; i < SIZE; i++) {
         z[i] = x[i] * c + y[i];
     }
-    end_t = clock();
-    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-    printf("%f\n", total_t);
+    time_t end = time(NULL);
+    printf("%d\n", difftime(end, start));
 
     printf("%d\n", c);
     printf("%d\n", x[3]);
