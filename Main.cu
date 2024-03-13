@@ -22,13 +22,17 @@ int main() {
 
     //Number between 1 and 100
     int c = rand() % 100 + 1;
-    time_t start = time(NULL);
+    clock_t start_t, end_t;
+    double total_t;
+    start_t = clock();
 
     for (int i = 0; i < SIZE; i++) {
         z[i] = x[i] * c + y[i];
     }
-    time_t end = time(NULL);
-    printf("%f\n", difftime(end, start));
+
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+    printf("%f\n", total_t);
 
     printf("%d\n", c);
     printf("%d\n", x[3]);
