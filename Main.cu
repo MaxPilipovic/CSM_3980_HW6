@@ -24,7 +24,6 @@ int main() {
     int c = rand() % 100 + 1;
     time_t start = time(NULL);
 
-    start_t = clock();
     for (int i = 0; i < SIZE; i++) {
         z[i] = x[i] * c + y[i];
     }
