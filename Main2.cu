@@ -31,32 +31,32 @@ void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     cudaMemcpy(y_d, y, SIZE*sizeof(int), cudaMemcpyHostToDevice);
 
     //Start time
-    //clock_t start_t, end_t;
-    //double total_t;
-    //start_t = clock();
+    clock_t start_t, end_t;
+    double total_t;
+    start_t = clock();
 
-    cudaEvent_t start, stop;
-    cudaEventCreate(&start);
-    cudaEventCreate(&stop);
-    cudaEventRecord(start, 0);
-    int time;
+    //cudaEvent_t start, stop;
+    //cudaEventCreate(&start);
+    //cudaEventCreate(&stop);
+    //cudaEventRecord(start, 0);
+    //int time;
 
     //Perform computation on GPU
     int numThreadsPerBlock = 512;
     int numBlocks = (SIZE + numThreadsPerBlock - 1) / numThreadsPerBlock;
     vecadd_kernel<<<numBlocks, numThreadsPerBlock>>>(x_d, y_d, z_d, c, SIZE);
 
-    //end_t = clock();
-    //total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-    //printf("%f\n", total_t);
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+    printf("%f\n", total_t);
 
     //End time
-    cudaEventRecord(stop, 0);
-    cudaEventSynchronize(stop);
-    cudaEventElapsedTime(&time, start, stop);
-    printf("%f\n", time);
-    cudaEventDestroy(start);
-    cudaEventDestroy(stop);
+    //cudaEventRecord(stop, 0);
+    //cudaEventSynchronize(stop);
+    //cudaEventElapsedTime(&time, start, stop);
+    //printf("%f\n", time);
+    //cudaEventDestroy(start);
+    //cudaEventDestroy(stop);
 
     //Synchronize
     cudaDeviceSynchronize();
