@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 //Adjacent Multi-Threaded CUDA
-void random(float *array, float SIZE) {
-    for (float i = 0; i < SIZE; i++) {
+void random(int *array, int SIZE) {
+    for (int i = 0; i < SIZE; i++) {
         array[i] = rand();
     }
 }
 
-__global__ void vecadd_kernel(float* x, float* y, float* z, float c, float n) {
+__global__ void vecadd_kernel(int* x, int* y, int* z, int c, int n) {
     int i = blockDim.x * blockIdx.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
 
@@ -18,17 +18,17 @@ __global__ void vecadd_kernel(float* x, float* y, float* z, float c, float n) {
     }
 }
 
-void vecadd(float* x, float* y, float* z, float c, float SIZE) {
+void vecadd(int* x, int* y, int* z, int c, int SIZE) {
     //Allocate GPU memory
-    float *x_d, *y_d, *z_d;
+    int *x_d, *y_d, *z_d;
 
-    cudaMalloc((void**) &x_d, SIZE*sizeof(float));
-    cudaMalloc((void**) &y_d, SIZE*sizeof(float));
-    cudaMalloc((void**) &z_d, SIZE*sizeof(float));
+    cudaMalloc((void**) &x_d, SIZE*sizeof(int));
+    cudaMalloc((void**) &y_d, SIZE*sizeof(int));
+    cudaMalloc((void**) &z_d, SIZE*sizeof(int));
 
     //Copy data to GPU memory
-    cudaMemcpy(x_d, x, SIZE*sizeof(float), cudaMemcpyHostToDevice);
-    cudaMemcpy(y_d, y, SIZE*sizeof(float), cudaMemcpyHostToDevice);
+    cudaMemcpy(x_d, x, SIZE*sizeof(int), cudaMemcpyHostToDevice);
+    cudaMemcpy(y_d, y, SIZE*sizeof(int), cudaMemcpyHostToDevice);
 
     //Start time
     //clock_t start_t, end_t;
@@ -39,7 +39,7 @@ void vecadd(float* x, float* y, float* z, float c, float SIZE) {
     cudaEventCreate(&start);
     cudaEventCreate(&stop);
     cudaEventRecord(start, 0);
-    float time;
+    int time;
 
     //Perform computation on GPU
     int numThreadsPerBlock = 512;
@@ -62,7 +62,7 @@ void vecadd(float* x, float* y, float* z, float c, float SIZE) {
     cudaDeviceSynchronize();
 
     //Copy data from GPU memory
-    cudaMemcpy(z, z_d, SIZE *sizeof(float), cudaMemcpyDeviceToHost);
+    cudaMemcpy(z, z_d, SIZE *sizeof(int), cudaMemcpyDeviceToHost);
 
     //Deallocate GPU memory
     cudaFree(x_d);
@@ -75,16 +75,16 @@ int main() {
     //268435456
     //805306368
     //1073741824
-    float SIZE = 1610612736;
-    float *x = (float*)malloc(SIZE * sizeof(float));
-    float *y = (float*)malloc(SIZE * sizeof(float));
-    float *z = (float*)malloc(SIZE * sizeof(float));
+    int SIZE = 1610612736;
+    int *x = (int*)malloc(SIZE * sizeof(int));
+    int *y = (int*)malloc(SIZE * sizeof(int));
+    int *z = (int*)malloc(SIZE * sizeof(int));
 
     random(x, SIZE);
     random(y, SIZE);
 
     //Number between 1 and 100
-    float c = rand() % 100 + 1;
+    int c = rand() % 100 + 1;
 
     //Send it
     vecadd(x, y, z, c, SIZE);
