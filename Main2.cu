@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 //Adjacent Multi-Threaded CUDA
-void random(int *array, int SIZE) {
-    for (int i = 0; i < SIZE; i++) {
+void random(float *array, float SIZE) {
+    for (float i = 0; i < SIZE; i++) {
         array[i] = rand();
     }
 }
 
-__global__ void vecadd_kernel(float* x, float* y, float* z, int c, float n) {
+__global__ void vecadd_kernel(float* x, float* y, float* z, float c, float n) {
     int i = blockDim.x * blockIdx.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
 
@@ -18,7 +18,7 @@ __global__ void vecadd_kernel(float* x, float* y, float* z, int c, float n) {
     }
 }
 
-void vecadd(float* x, float* y, float* z, int c, float SIZE) {
+void vecadd(float* x, float* y, float* z, float c, float SIZE) {
     //Allocate GPU memory
     float *x_d, *y_d, *z_d;
 
@@ -84,7 +84,7 @@ int main() {
     random(y, SIZE);
 
     //Number between 1 and 100
-    int c = rand() % 100 + 1;
+    float c = rand() % 100 + 1;
 
     //Send it
     vecadd(x, y, z, c, SIZE);
